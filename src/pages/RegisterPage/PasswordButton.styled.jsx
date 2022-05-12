@@ -1,18 +1,29 @@
 import styled from 'styled-components';
 
-const Button = styled.button`
-  display: block;
+const ShowPasswordButton = styled.button`
+  border: none;
+  position: relative;
+  bottom: 53px;
+  left: 190px;
+  outline: none;
+  border-radius: 50px;
+  background-color: inherit;
+
+  @media screen and (max-width: 555px) {
+    left: 90px;
+  }
+`;
+
+export const Button = styled.button`
   border: none;
   outline: none;
   border-radius: 50px;
   padding: 10px 15px;
+  margin-top: 10px;
   margin-left: auto;
-  margin-right: auto;
-  margin-top: 20px;
-  margin-bottom: auto;
   background-color: #2f4f4f;
   color: white;
-  font-weight: 600;
+  font-weight: 500;
   &:hover {
     cursor: pointer;
     transition: all 0.3s ease 0s;
@@ -22,18 +33,4 @@ const Button = styled.button`
   }
 `;
 
-const H1 = styled.h1`
-  margin-right: 10px;
-  display: inline;
-`;
-
-const Span = styled.span`
-  display: block;
-  text-decoration: none;
-  padding: 12px;
-  font-weight: 500;
-  color: #545f6c;
-  font-size: 18px;
-`;
-
-export { H1, Button, Span };
+export { ShowPasswordButton };

@@ -1,11 +1,9 @@
 import { useState } from 'react';
-// import {
-//   useAddContactMutation,
-//   useFetchContactsQuery,
-// } from '../../redux/contactsApi';
-import { useLoginUserMutation } from '../redux/auth/authApi';
+import { useDispatch } from 'react-redux';
+import { useLoginUserMutation, authAction } from '../redux/auth/authApi';
 
 import { Button } from '../components/ContactListItem/ContactListItem.styled';
+import { ShowPasswordButton } from './RegisterPage/PasswordButton.styled';
 import {
   Form,
   Input,
@@ -15,23 +13,19 @@ import {
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [show, setShow] = useState(false);
 
   const [loginUser] = useLoginUserMutation();
-  //   const [addContact] = useAddContactMutation();
-  //   const { data = [] } = useFetchContactsQuery();
+  const dispatch = useDispatch();
+
+  const handleClick = () => setShow(!show);
 
   const submitHandler = async e => {
     e.preventDefault();
-    // if (
-    //   data.find(
-    //     contactsEl => contactsEl.name.toLowerCase() === name.toLowerCase(),
-    //   )
-    // ) {
-    //   alert(`${name.toLocaleUpperCase()} is already in contacts!`);
-    //   return;
-    // }
     try {
-      await loginUser({ email, password });
+      const data = await loginUser({ email, password });
+      dispatch(authAction(data));
+      console.log(data);
     } catch (error) {
       console.log('ERROR');
     }
@@ -74,7 +68,7 @@ const LoginForm = () => {
       <Label>
         Password (8 characters minimum)
         <Input
-          type="password"
+          type={show ? 'text' : 'password'}
           name="password"
           value={password}
           placeholder="Your password"
@@ -83,9 +77,12 @@ const LoginForm = () => {
           onChange={formHandler}
           required
         />
+        <ShowPasswordButton type="button" onClick={handleClick}>
+          {show ? 'Hide Password' : 'Show Password'}
+        </ShowPasswordButton>
       </Label>
 
-      <Button type="submit">Add contact</Button>
+      <Button type="submit">Log in</Button>
     </Form>
   );
 };

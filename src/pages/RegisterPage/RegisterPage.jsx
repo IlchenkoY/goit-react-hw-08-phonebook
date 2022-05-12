@@ -1,11 +1,7 @@
 import { useState } from 'react';
-// import {
-//   useAddContactMutation,
-//   useFetchContactsQuery,
-// } from '../../redux/contactsApi';
 import { useRegisterUserMutation } from '../../redux/auth/authApi';
-import { Button } from '../../components/ContactListItem/ContactListItem.styled';
-import { PasswordButton } from './Button.styled';
+// import { Button } from '../../components/ContactListItem/ContactListItem.styled';
+import { ShowPasswordButton, Button } from './PasswordButton.styled';
 import {
   Form,
   Input,
@@ -18,8 +14,6 @@ const RegisterForm = () => {
   const [password, setPassword] = useState('');
   const [show, setShow] = useState(false);
 
-  //   const [addContact] = useAddContactMutation();
-  //   const { data = [] } = useFetchContactsQuery();
   const [registerUser] = useRegisterUserMutation();
 
   const handleClick = () => setShow(!show);
@@ -36,7 +30,8 @@ const RegisterForm = () => {
     //   return;
     // }
     try {
-      await registerUser({ name, email, password });
+      const data = await registerUser({ name, email, password });
+      console.log(data);
     } catch (error) {
       console.log('ERROR');
     }
@@ -104,12 +99,12 @@ const RegisterForm = () => {
           onChange={formHandler}
           required
         />
-        <PasswordButton type="button" onClick={handleClick}>
+        <ShowPasswordButton type="button" onClick={handleClick}>
           {show ? 'Hide Password' : 'Show Password'}
-        </PasswordButton>
+        </ShowPasswordButton>
       </Label>
 
-      <Button type="submit">Add contact</Button>
+      <Button type="submit">Sign in</Button>
     </Form>
   );
 };

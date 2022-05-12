@@ -1,11 +1,16 @@
-import { useLogoutUserMutation } from '../../redux/auth/authApi';
+import { useDispatch } from 'react-redux';
+import { useLogoutUserMutation, logoutAction } from '../../redux/auth/authApi';
+import { Button } from './UserMenu.styled';
 
 const UserMenu = () => {
   const [LogoutUser] = useLogoutUserMutation();
 
+  const dispatch = useDispatch();
+
   const logOutHandler = async () => {
     try {
       await LogoutUser();
+      dispatch(logoutAction());
     } catch (error) {
       console.log('ERROR');
     }
@@ -13,10 +18,9 @@ const UserMenu = () => {
 
   return (
     <>
-      <span>Welcome</span>
-      <button type="button" onClick={logOutHandler}>
+      <Button type="button" onClick={logOutHandler}>
         Log out
-      </button>
+      </Button>
     </>
   );
 };
