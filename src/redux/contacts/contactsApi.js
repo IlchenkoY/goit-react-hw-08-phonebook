@@ -16,6 +16,8 @@ export const contactsApi = createApi({
   endpoints: builder => ({
     fetchContacts: builder.query({
       query: () => 'contacts',
+      keepUnusedDataFor: 5,
+      // providesTags: ['Contacts'],
       providesTags: result =>
         result
           ? [
@@ -30,6 +32,7 @@ export const contactsApi = createApi({
         method: 'POST',
         body: newContact,
       }),
+      // invalidatesTags: ['Contacts'],
       invalidatesTags: [{ type: 'Contacts', id: 'LIST' }],
     }),
     deleteTodo: builder.mutation({
@@ -37,6 +40,7 @@ export const contactsApi = createApi({
         url: `contacts/${contactid}`,
         method: 'DELETE',
       }),
+      // invalidatesTags: ['Contacts'],
       invalidatesTags: [{ type: 'Contacts', id: 'LIST' }],
     }),
   }),

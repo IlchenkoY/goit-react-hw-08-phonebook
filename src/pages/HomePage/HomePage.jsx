@@ -1,8 +1,10 @@
 import { useSelector } from 'react-redux';
-import { Button, H1, Span } from './HomePage.styled';
+import { useLocation } from 'react-router-dom';
+import { H1, Span, Link } from './HomePage.styled';
 import { ReactComponent as PhoneBookIcon } from '../../icons/phone-book_icon-icons.com_56484.svg';
 
 const HomePage = () => {
+  const location = useLocation();
   const userName = useSelector(state => state.authorization.user.name);
 
   return (
@@ -12,7 +14,9 @@ const HomePage = () => {
       {userName ? (
         <Span>Welcome {userName}</Span>
       ) : (
-        <Button type="button">Try it now</Button>
+        <Link to="/register" state={{ from: location }}>
+          Try it now
+        </Link>
       )}
     </>
   );

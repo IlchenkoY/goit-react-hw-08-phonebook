@@ -13,11 +13,10 @@ const Button = styled.button`
   border: none;
   outline: none;
   border-radius: 50px;
-  padding: 8px 10px;
+  padding: 10px 15px;
   margin-top: 10px;
   /* margin-left: auto; */
   margin-right: 20px;
-  margin-left: 160px;
   background-color: #2f4f4f;
   color: white;
   font-weight: 500;

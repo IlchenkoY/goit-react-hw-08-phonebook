@@ -5,7 +5,6 @@ const initialState = {
   user: { name: null, email: null },
   token: null,
   isLoggedIn: false,
-  isFetchingCurrentUser: false,
 };
 
 export const authSlice = createSlice({
@@ -13,7 +12,7 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     getCurrentUserAction: (state, action) => {
-      state.user = action.payload.data;
+      state.user = action.payload;
       state.isLoggedIn = true;
     },
     authAction: (state, action) => {
@@ -21,7 +20,7 @@ export const authSlice = createSlice({
       state.token = action.payload.data.token;
       state.isLoggedIn = true;
     },
-    logoutAction: (state, action) => {
+    logoutAction: (state, _) => {
       state.user = { name: null, email: null };
       state.token = null;
       state.isLoggedIn = false;
@@ -31,6 +30,7 @@ export const authSlice = createSlice({
 
 export const { getCurrentUserAction, authAction, logoutAction } =
   authSlice.actions;
+export default authSlice.reducer;
 
 export const authApi = createApi({
   reducerPath: 'auth',
@@ -53,13 +53,14 @@ export const authApi = createApi({
       //   method: 'GET',
       query: () => `/users/current`,
       // }),
-      providesTags: result =>
-        result
-          ? [
-              ...result.map(({ id }) => ({ type: 'Auth', id })),
-              { type: 'Auth', id: 'LIST' },
-            ]
-          : [{ type: 'Auth', id: 'LIST' }],
+      providesTags: ['Auth'],
+      // providesTags: result =>
+      //   result
+      //     ? [
+      //         ...result.map(({ id }) => ({ type: 'Auth', id })),
+      //         { type: 'Auth', id: 'LIST' },
+      //       ]
+      //     : [{ type: 'Auth', id: 'LIST' }],
     }),
     registerUser: builder.mutation({
       query: newUser => ({
@@ -67,7 +68,7 @@ export const authApi = createApi({
         method: 'POST',
         body: newUser,
       }),
-      invalidatesTags: [{ type: 'Auth', id: 'LIST' }],
+      invalidatesTags: ['Auth'],
     }),
     loginUser: builder.mutation({
       query: loginData => ({
@@ -82,7 +83,7 @@ export const authApi = createApi({
         url: `/users/logout`,
         method: 'POST',
       }),
-      invalidatesTags: [{ type: 'Auth', id: 'LIST' }],
+      invalidatesTags: ['Auth'],
     }),
   }),
 });

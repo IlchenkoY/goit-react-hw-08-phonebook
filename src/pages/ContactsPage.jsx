@@ -4,18 +4,29 @@ import { useFetchContactsQuery } from '../redux/contacts/contactsApi';
 import { ContactForm } from '../components/ContactForm/ContactForm';
 import { ContactList } from '../components/Contactlist/ContactList';
 import { Filter } from '../components/Filter/Filter';
-import { getFilter, getFilteredContacts } from '../redux/filter/selectors';
+import {
+  getFilter,
+  getFilteredContacts,
+} from '../redux/filter/filterSelectors';
 
 const ContactsPage = () => {
-  const { data = [], isFetching } = useFetchContactsQuery();
+  const token = useSelector(state => state.authorization.token);
+
   const filter = useSelector(getFilter);
-  const filteredContacts = getFilteredContacts(data, filter);
+
+  const { data = [], isFetching, isSuccess } = useFetchContactsQuery();
+
+  const filteredContacts =
+    token === null ? [] : getFilteredContacts(data, filter);
 
   return (
     <>
       <ContactForm />
       <h2>Your Contacts</h2>
-      {data.length > 0 && <Filter />}
+      <Filter />
+      {filteredContacts.length === 0 && isSuccess && (
+        <p>You have no contacts yet</p>
+      )}
       {isFetching && data.length === 0 && (
         <Loader
           className="loader"
@@ -26,7 +37,6 @@ const ContactsPage = () => {
         />
       )}
       {filteredContacts.length !== 0 && <ContactList />}
-      {data.length === 0 && !isFetching && <p>You have no contacts yet</p>}
     </>
   );
 };

@@ -1,9 +1,10 @@
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
-const Button = styled.button`
+const Link = styled(NavLink)`
   display: block;
-  border: none;
-  outline: none;
+  width: 105px;
+  text-decoration: none;
   border-radius: 50px;
   padding: 10px 15px;
   margin-left: auto;
@@ -36,4 +37,4 @@ const Span = styled.span`
   font-size: 18px;
 `;
 
-export { H1, Button, Span };
+export { H1, Span, Link };

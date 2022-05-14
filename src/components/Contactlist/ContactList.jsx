@@ -1,20 +1,17 @@
 import { useSelector } from 'react-redux';
 import { useFetchContactsQuery } from '../../redux/contacts/contactsApi';
-import { getFilter, getFilteredContacts } from '../../redux/filter/selectors';
+import {
+  getFilter,
+  getFilteredContacts,
+} from '../../redux/filter/filterSelectors';
 import { ContactListItem } from '../ContactListItem/ContactListItem';
 import { List, ListItem } from './ContactList.styled';
 
 const ContactList = () => {
-  const { data = [], error } = useFetchContactsQuery();
   const filter = useSelector(getFilter);
-  let filteredContacts = getFilteredContacts(data, filter);
 
-  if (error !== undefined) {
-    if (error.status === 404) {
-      filteredContacts = [];
-      return <></>;
-    }
-  }
+  const { data = [] } = useFetchContactsQuery();
+  let filteredContacts = getFilteredContacts(data, filter);
 
   return (
     <List>

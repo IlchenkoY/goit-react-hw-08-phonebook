@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLoginUserMutation, authAction } from '../redux/auth/authApi';
-
-import { Button } from '../components/ContactListItem/ContactListItem.styled';
+import { Button } from '../components/ContactForm/ContactForm.styled';
 import { ShowPasswordButton } from './RegisterPage/PasswordButton.styled';
 import {
   Form,
@@ -25,7 +24,6 @@ const LoginForm = () => {
     try {
       const data = await loginUser({ email, password });
       dispatch(authAction(data));
-      console.log(data);
     } catch (error) {
       console.log('ERROR');
     }

@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { useRegisterUserMutation } from '../../redux/auth/authApi';
+import { useDispatch } from 'react-redux';
+import { useRegisterUserMutation, authAction } from '../../redux/auth/authApi';
 // import { Button } from '../../components/ContactListItem/ContactListItem.styled';
 import { ShowPasswordButton, Button } from './PasswordButton.styled';
 import {
@@ -15,6 +16,7 @@ const RegisterForm = () => {
   const [show, setShow] = useState(false);
 
   const [registerUser] = useRegisterUserMutation();
+  const dispatch = useDispatch();
 
   const handleClick = () => setShow(!show);
 
@@ -31,6 +33,7 @@ const RegisterForm = () => {
     // }
     try {
       const data = await registerUser({ name, email, password });
+      dispatch(authAction(data));
       console.log(data);
     } catch (error) {
       console.log('ERROR');
@@ -70,6 +73,7 @@ const RegisterForm = () => {
           name="name"
           value={name}
           placeholder="Enter your name"
+          title="Enter your name"
           onChange={formHandler}
           required
         />
@@ -89,7 +93,6 @@ const RegisterForm = () => {
       <Label>
         Password (8 characters minimum)
         <Input
-          // type="password"
           type={show ? 'text' : 'password'}
           name="password"
           value={password}
