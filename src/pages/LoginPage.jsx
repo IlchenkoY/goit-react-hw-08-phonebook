@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLoginUserMutation, authAction } from '../redux/auth/authApi';
 import { Button } from '../components/ContactForm/ContactForm.styled';
@@ -8,13 +8,19 @@ import {
   Input,
   Label,
 } from '../components/ContactForm/ContactForm.styled';
+import registerErrors from '../services/registorErrors';
 
-const LoginForm = () => {
+export default function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [show, setShow] = useState(false);
 
-  const [loginUser] = useLoginUserMutation();
+  const [loginUser, { error }] = useLoginUserMutation();
+
+  useEffect(() => {
+    registerErrors(error);
+  }, [error]);
+
   const dispatch = useDispatch();
 
   const handleClick = () => setShow(!show);
@@ -83,6 +89,4 @@ const LoginForm = () => {
       <Button type="submit">Log in</Button>
     </Form>
   );
-};
-
-export { LoginForm };
+}

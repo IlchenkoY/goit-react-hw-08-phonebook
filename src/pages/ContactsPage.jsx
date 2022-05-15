@@ -4,17 +4,24 @@ import { useFetchContactsQuery } from '../redux/contacts/contactsApi';
 import { ContactForm } from '../components/ContactForm/ContactForm';
 import { ContactList } from '../components/Contactlist/ContactList';
 import { Filter } from '../components/Filter/Filter';
+import { getToken } from '../redux/auth/authSelectors';
 import {
   getFilter,
   getFilteredContacts,
 } from '../redux/filter/filterSelectors';
 
-const ContactsPage = () => {
-  const token = useSelector(state => state.authorization.token);
+export default function ContactsPage() {
+  const token = useSelector(getToken);
 
   const filter = useSelector(getFilter);
 
-  const { data = [], isFetching, isSuccess } = useFetchContactsQuery();
+  const {
+    data = [],
+    isFetching,
+    isSuccess,
+  } = useFetchContactsQuery(token, {
+    skip: token === null,
+  });
 
   const filteredContacts =
     token === null ? [] : getFilteredContacts(data, filter);
@@ -39,6 +46,4 @@ const ContactsPage = () => {
       {filteredContacts.length !== 0 && <ContactList />}
     </>
   );
-};
-
-export { ContactsPage };
+}

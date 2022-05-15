@@ -16,12 +16,13 @@
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-hot-toast": "^2.2.0",
     "react-icons": "^4.3.1",
     "react-loader-spinner": "^4.0.0",
     "react-redux": "^8.0.1",
     "react-router-dom": "^6.0.2",
     "react-scripts": "4.0.3",
-    "react-toastify": "^8.1.0",
+    "react-toastify": "^8.2.0",
     "redux": "^4.2.0",
     "redux-persist": "^6.0.0",
     "shortid": "^2.2.16",
@@ -33,7 +34,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "gh-pages -d build",
+    "deploy": "netlify deploy -p",
     "predeploy": "npm run build",
     "prepare": "husky install"
   },
@@ -45,7 +46,6 @@
   "bugs": {
     "url": "https://github.com/IlchenkoY/goit-react-hw-08-phonebook.git/issues"
   },
-  "homepage": "https://IlchenkoY.github.io/goit-react-hw-08-phonebook",
   "eslintConfig": {
     "extends": [
       "react-app",

@@ -1,11 +1,12 @@
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { H1, Span, Link } from './HomePage.styled';
+import { getUserName } from '../../redux/auth/authSelectors';
 import { ReactComponent as PhoneBookIcon } from '../../icons/phone-book_icon-icons.com_56484.svg';
 
-const HomePage = () => {
+export default function HomePage() {
   const location = useLocation();
-  const userName = useSelector(state => state.authorization.user.name);
+  const userName = useSelector(getUserName);
 
   return (
     <>
@@ -20,6 +21,4 @@ const HomePage = () => {
       )}
     </>
   );
-};
-
-export { HomePage };
+}

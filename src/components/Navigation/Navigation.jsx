@@ -1,8 +1,11 @@
 import { Link, NavItem, NavList } from './Navigation.styled';
 import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { getIsLoggedIn } from '../../redux/auth/authSelectors';
 
 const Navigation = () => {
   const location = useLocation();
+  const isLoggedIn = useSelector(getIsLoggedIn);
   return (
     <nav>
       <NavList>
@@ -13,7 +16,7 @@ const Navigation = () => {
         </NavItem>
         <NavItem>
           <Link to="/contacts" state={{ from: location }}>
-            Contacts
+            {isLoggedIn && <span>Contacts</span>}
           </Link>
         </NavItem>
       </NavList>

@@ -1,10 +1,9 @@
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import {
   useAddContactMutation,
   useFetchContactsQuery,
 } from '../../redux/contacts/contactsApi';
-
-// import { Button } from '../ContactListItem/ContactListItem.styled';
 import { Form, Input, Label, Button } from './ContactForm.styled';
 
 const ContactForm = () => {
@@ -21,7 +20,7 @@ const ContactForm = () => {
         contactsEl => contactsEl.name.toLowerCase() === name.toLowerCase(),
       )
     ) {
-      alert(`${name.toLocaleUpperCase()} is already in contacts!`);
+      toast.error(`${name.toLocaleUpperCase()} is already in contacts!`);
       return;
     }
     try {

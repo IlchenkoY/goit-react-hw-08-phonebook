@@ -8,7 +8,7 @@ const AuthNav = () => {
       <NavList>
         <NavItem>
           <Link to="/register" state={{ from: location }}>
-            Sign in
+            Sign up
           </Link>
         </NavItem>
         <NavItem>

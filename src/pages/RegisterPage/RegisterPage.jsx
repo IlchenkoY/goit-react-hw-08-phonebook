@@ -1,36 +1,32 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useRegisterUserMutation, authAction } from '../../redux/auth/authApi';
-// import { Button } from '../../components/ContactListItem/ContactListItem.styled';
 import { ShowPasswordButton, Button } from './PasswordButton.styled';
 import {
   Form,
   Input,
   Label,
 } from '../../components/ContactForm/ContactForm.styled';
+import registerErrors from '../../services/registorErrors';
 
-const RegisterForm = () => {
+export default function RegisterForm() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [show, setShow] = useState(false);
 
-  const [registerUser] = useRegisterUserMutation();
+  const [registerUser, { error }] = useRegisterUserMutation();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    registerErrors(error);
+  }, [error]);
 
   const handleClick = () => setShow(!show);
 
   const submitHandler = async e => {
     e.preventDefault();
 
-    // if (
-    //   data.find(
-    //     contactsEl => contactsEl.name.toLowerCase() === name.toLowerCase(),
-    //   )
-    // ) {
-    //   alert(`${name.toLocaleUpperCase()} is already in contacts!`);
-    //   return;
-    // }
     try {
       const data = await registerUser({ name, email, password });
       dispatch(authAction(data));
@@ -110,6 +106,4 @@ const RegisterForm = () => {
       <Button type="submit">Sign in</Button>
     </Form>
   );
-};
-
-export { RegisterForm };
+}
