@@ -70,14 +70,14 @@ export default function LoginForm() {
         />
       </Label>
       <Label>
-        Password (8 characters minimum)
+        Password (7 characters minimum)
         <Input
           type={show ? 'text' : 'password'}
           name="password"
           value={password}
           placeholder="Your password"
           title="password should contain 8 characters minimum"
-          minlength="8"
+          minlength="7"
           onChange={formHandler}
           required
         />
